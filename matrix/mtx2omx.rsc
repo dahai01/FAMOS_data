@@ -30,6 +30,7 @@ macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, cores)
                 IndexName: "ID"})
 
    mc = CreateMatrixCurrency(m,root_mc,,,)
+   // mc = CreateMatrixCurrency(m,,,,) // can do the works with no core specified
     
    if (cores = null) then
       CopyMatrix(mc,{{"File Name", omx_file}, 
