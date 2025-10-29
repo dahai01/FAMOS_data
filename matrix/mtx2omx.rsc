@@ -1,6 +1,6 @@
 
 // exports from mtx to omx
-macro "export_skim_to_omx" (mtx_file, omx_file, root_mc)
+macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, cores)
 //
 
    ok = 1
@@ -30,8 +30,15 @@ macro "export_skim_to_omx" (mtx_file, omx_file, root_mc)
                 IndexName: "ID"})
 
    mc = CreateMatrixCurrency(m,root_mc,,,)
+    
+   if (cores = null) then
+      CopyMatrix(mc,{{"File Name", omx_file}, 
+                    {"OMX", True}, //all cores if not specified
+                    {"File Based", "Yes"}})
+   else
    CopyMatrix(mc,{{"File Name", omx_file}, 
                     {"OMX", True},
+                    {"Cores", cores},
                     {"File Based", "Yes"}})
    return (ok)
 endmacro
