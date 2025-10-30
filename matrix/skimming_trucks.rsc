@@ -7,18 +7,13 @@ macro "run"
     scen_dir ="D:\\Projects\\allston\\tdm23\\outputs\\AssignTransitOnly\\bld2050_2\\" //update me 
     hwy_dbd = scen_dir + "_networks\\LinksNodes.dbd"
     out_mtx_dir = scen_dir + "temp\\"
-
-    // ***** place holders *****
-    log_level = 1
-    rs_fare_ls = null
-    // ***** end           *****
  
-    runmacro ("Skim Highway",scen_dir,hwy_dbd,out_mtx_dir,log_level,rs_fare_ls)
+    runmacro ("Skim Highway",scen_dir,hwy_dbd,out_mtx_dir)
 
 endmacro
 
 
-macro "Skim Highway"  (scen_dir,hwy_dbd,out_mtx_dir,log_level,rs_fare_ls)
+macro "Skim Highway"  (scen_dir,hwy_dbd,out_mtx_dir)
 // Helper function to skim highway network
    
     /*
