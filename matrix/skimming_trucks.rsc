@@ -1,19 +1,21 @@
 
 
-//this code is based on the "skimming" code in the tdm23, 
-// with more tod (pm, nt) and more skims ( like truck skims) this was needed for preparing the data request by Tredis. 
+// this code is based on the "skimming" code in the tdm23, 
+// with more tod (pm, nt) and more skims (like truck skims),
+// this was needed for preparing the data request by Tredis. 
 macro "run"
 
-    scen_dir ="D:\\Projects\\allston\\tdm23\\outputs\\AssignTransitOnly\\bld2050_2\\" //update me 
-    hwy_dbd = scen_dir + "_networks\\LinksNodes.dbd"
+    //update me
+    scen_dir ="D:\\Projects\\allston\\tdm23\\outputs\\AssignTransitOnly\\bld2050_2\\" 
     out_mtx_dir = scen_dir + "temp\\"
  
+    hwy_dbd = scen_dir + "_networks\\LinksNodes.dbd"
     runmacro ("Skim Highway",scen_dir,hwy_dbd,out_mtx_dir)
 
 endmacro
 
 
-macro "Skim Highway"  (scen_dir,hwy_dbd,out_mtx_dir)
+macro "Skim Highway" (scen_dir,hwy_dbd,out_mtx_dir)
 // Helper function to skim highway network
    
     /*
@@ -45,7 +47,7 @@ macro "Skim Highway"  (scen_dir,hwy_dbd,out_mtx_dir)
     
     // delete single skims
     for tod in {"am","md","pm","nt"} do //{"am","md","pm","nt"}
-        for mode in {"da","sr","mtrk","htrk"} do
+        for mode in {"mtrk","htrk"} do // {"da","sr","mtrk","htrk"} 
             hwy_skim = out_mtx_dir + "hwy_"+mode+"_"+tod+".mtx"
             //hwy_skim = runmacro("get_highway_mode_skim_file", out_dir, tod, mode)
             DeleteFile(hwy_skim)
@@ -66,11 +68,8 @@ macro "skim_highway_mode" (hwy_dbd, hwy_net, hwy_skim, mode, tod)
 
     filter = "available = 0 | transit_only = 1 | walk_bike_only = 1 | pnr_link = 1"
     hov_filter =  "| hov_only_"+tod+" = 1"
-    if (mode = "da")   then filter = filter + hov_filter+ " | truck_only = 1" //filter + " | hov_only = 1 | truck_only = 1"
-    if (mode = "sr")   then filter = filter + " | truck_only = 1"
-    if (mode = "mtrk") then filter = filter + hov_filter+ " | small_veh_only = 1 "//filter + " | hov_only_am = 1 | small_veh_only = 1 "
-    if (mode = "htrk") then filter = filter  + hov_filter+ " |  small_veh_only = 1 | no_heavy_truck = 1"
-
+    if (mode = "mtrk") then filter = filter + hov_filter + " | small_veh_only = 1"
+    if (mode = "htrk") then filter = filter + hov_filter + " | small_veh_only = 1 | no_heavy_truck = 1"
 
 
     // update network fields and filter by mode
