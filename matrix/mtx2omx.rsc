@@ -1,3 +1,18 @@
+macro "export_truck_od" (scen_dir, omx_dir)
+
+   ok = 2
+
+   selected_cores = {"mtrk", "htrk"}
+   current_core = "mtrk" // can be null
+   for tod in {"am", "md", "pm", "nt"} do
+      mtx_file = scen_dir + "\\_demand\\tod\\od_trk_" + tod + ".mtx"
+      omx_file = omx_dir + "\\od_trk_" + tod + ".omx"
+      ok = runmacro ("export_skim_to_omx", mtx_file, omx_file, current_core, selected_cores)
+   end
+   return(ok)
+endmacro
+
+
 
 // exports from mtx to omx
 macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, selected_cores)
