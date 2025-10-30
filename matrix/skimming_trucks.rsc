@@ -42,7 +42,7 @@ macro "Skim Highway"  (scen_dir,hwy_dbd,out_mtx_dir,log_level,rs_fare_ls)
         end
 
         // combine skims
-        comb_mat = runmacro("combine_mode_skims", out_mtx_dir, tod, scen_dir)
+        comb_mat = runmacro("combine_mode_skims", out_mtx_dir, tod)
 
         // ***** dropped: add rs fare core using rs_fare_ls *****
 
@@ -141,7 +141,7 @@ macro "rename_skim_cores" (hwy_skim, mode)
     return(ok)
 endmacro
 
-macro "combine_mode_skims" (out_mtx_dir, tod,scen_dir)
+macro "combine_mode_skims" (out_mtx_dir, tod)
 // Combine skims into a single file by tod
     
     // ***** dropped: codes about other matrices *****
