@@ -1,12 +1,13 @@
 
 // exports from mtx to omx
-macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, cores)
+macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, selected_cores)
 //
 
    ok = 1
    
    // add simple index of number sequence (needed for OMX outputs)
    m = OpenMatrix(mtx_file,)
+   all_cores = GetMatrixCoreNames(m)
    curr_idx = GetMatrixIndex(m)
    index_ids = GetMatrixIndexIDs(m,curr_idx[1])
    mat_size = ArrayLength(index_ids)
@@ -32,14 +33,20 @@ macro "export_skim_to_omx" (mtx_file, omx_file, root_mc, cores)
    mc = CreateMatrixCurrency(m,root_mc,,,)
    // mc = CreateMatrixCurrency(m,,,,) // can do the works with no core specified
     
-   if (cores = null) then
+   if (selected_cores = null) then
       CopyMatrix(mc,{{"File Name", omx_file}, 
                     {"OMX", True}, //all cores if not specified
                     {"File Based", "Yes"}})
-   else
+   else do
+      pos_arr = null // not `pos_arr = {}`
+      for c in selected_cores do
+         p = ArrayPosition(all_cores, {c}, )
+         pos_arr = pos_arr + {p}
+      end
    CopyMatrix(mc,{{"File Name", omx_file}, 
                     {"OMX", True},
-                    {"Cores", cores},
+                    {"Cores", pos_arr},
                     {"File Based", "Yes"}})
+   end
    return (ok)
 endmacro
