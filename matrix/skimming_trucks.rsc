@@ -29,7 +29,7 @@ macro "Skim Highway" (scen_dir,hwy_dbd,out_mtx_dir)
     ok = 1
 
     for tod in {"am","md","pm","nt"} do //{"am","md","pm","nt"}
-        for mode in {"da","sr","mtrk","htrk"} do
+        for mode in {"mtrk","htrk"} do
             // hwy_net = Args.("Highway Net - " + tod)
             hwy_net = scen_dir + "_networks\\hwy_"+tod+".net"
             hwy_skim = out_mtx_dir + "hwy_"+mode+"_"+tod+".mtx"
